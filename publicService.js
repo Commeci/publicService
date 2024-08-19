@@ -10,8 +10,11 @@ const $detailInfo = document.getElementById("detail-info");
 const $selectRegion = document.getElementById("select-region");
 const $searchInput = document.getElementById("search-input");
 const $searchIcon = document.getElementById("search-icon");
-const $prev = document.getElementById("prev");
-const $next = document.getElementById("next");
+const $close = document.getElementById("close");
+const $ham = document.getElementById("ham");
+const $closeCate = document.getElementById("close-cate");
+const $myCate = document.getElementById("my-cate");
+const $sec2 = document.querySelector(".sec2");
 
 let subCategory = " "; // 카테고리
 let service = " "; // 서비스 (검색)
@@ -97,8 +100,17 @@ const clickLogo = () => {
     }
 };
 
-const searchData = () => {
-    service = $searchInput.value;
+const searchData = (event) => {
+    if (event.type === "keypress" && event.key !== "Enter") {
+        service = $searchInput.value.trim();
+        return;
+    }
+
+    if (event.type === "keypress") {
+        event.preventDefault();
+    }
+    service = $searchInput.value.trim();
+    $searchInput.value = "";
     updatePage();
 };
 
@@ -128,13 +140,13 @@ const createBtn = (categories) => {
         const swiperSlide = document.createElement("div");
         swiperSlide.className = "swiper-slide";
         const swiperSlideButton = document.createElement("button");
-        swiperSlideButton.className = "cate";
+        swiperSlideButton.classList.add("cate", "font-noto");
         swiperSlideButton.textContent = item;
         swiperSlide.appendChild(swiperSlideButton);
         $swiperWrapper.appendChild(swiperSlide);
 
         const cateMenuButton = document.createElement("button");
-        cateMenuButton.classList.add("cate", "shadow");
+        cateMenuButton.classList.add("cate", "shadow", "font-noto");
         cateMenuButton.textContent = item;
         $cateMenu.appendChild(cateMenuButton);
 
@@ -157,7 +169,7 @@ const createBtn = (categories) => {
 const updateDetailInfo = (item) => {
     const detailText = document.getElementById("detail-text");
     const reserveLink = document.getElementById("reserve-link");
-    detailText.innerHTML = item.DTLCONT;
+    detailText.innerHTML = item.DTLCONT.replace(/<img[^>]*>/g, "");
     searchMap(item.Y, item.X);
     reserveLink.href = item.SVCURL || "#";
 };
@@ -172,28 +184,39 @@ const createListItem = (item) => {
     let dateEnd = item.SVCOPNENDDT
         ? new Date(item.SVCOPNENDDT).toISOString().slice(0, 10)
         : "";
+    let state =
+        item.SVCSTATNM.length > 4 ? item.SVCSTATNM.slice(-4) : item.SVCSTATNM;
+    let stateClass = "";
+    if (state === "접수종료" || state === "예약마감") {
+        stateClass = "state-black";
+    } else if (state === "일시중지") {
+        stateClass = "state-red";
+    } else if (state === "접수중" || state === "안내중") {
+        stateClass = "state-blue";
+    }
     listItem.innerHTML = `
             <div class="img-box">
                 <img
                     src="${item.IMGURL}"
                     alt="img"
                 />
+                <label class="state ${stateClass} font-noto">${state}</label>
             </div>
             <div class="list-info">
-                <h3>${item.SVCNM}</h3>
-                <p>
+                <h3 class="font-noto">${item.SVCNM}</h3>
+                <p class="font-noto">
                     <i class="icon"
                         ><img src="./img/user.png" alt=""
                     /></i>
                     <span>${item.USETGTINFO}</span>
                 </p>
-                <p>
+                <p class="font-noto">
                     <i class="icon"
                         ><img src="./img/pin.png" alt=""
                     /></i>
                     <span>${item.PLACENM}</span>
                 </p>
-                <p>
+                <p class="font-noto">
                     <i class="icon"
                         ><img src="./img/calendar.png" alt=""
                     /></i>
@@ -204,9 +227,14 @@ const createListItem = (item) => {
 
     console.log("create list item");
     listItem.addEventListener("click", () => {
-        console.log("click list item");
         $detailInfo.classList.remove("hidden-info");
+        $sec2.classList.add("show-sec2");
         updateDetailInfo(item);
+    });
+
+    $close.addEventListener("click", (e) => {
+        e.stopPropagation();
+        $sec2.classList.remove("show-sec2");
     });
 
     return listItem;
@@ -237,6 +265,7 @@ const getDatas = async () => {
             const listItem = createListItem(item);
             $serviceList.prepend(listItem);
         });
+        service = "";
     } catch (error) {
         console.error("post error", error);
         $serviceList.innerHTML = "<li class='error'>관련 정보가 없습니다</li>";
@@ -270,7 +299,7 @@ const pagination = () => {
     let prevGroup = (pageGroup - 2) * groupSize + 1;
     let nextGroup = pageGroup * groupSize + 1;
 
-    let paginationHTML = `<div class="page">`;
+    let paginationHTML = `<div class="page font-noto">`;
 
     paginationHTML += `<i class="page-icon fa-solid fa-chevron-left" id="prev" 
     ${
@@ -294,12 +323,32 @@ const pagination = () => {
     $serviceList.innerHTML += paginationHTML;
 };
 
+const showCate = () => {
+    $myCate.style.cssText = `display: block;`;
+};
+
+const closeCate = () => {
+    $myCate.style.cssText = `display: none;`;
+};
+
+const checkScreenSize = () => {
+    if (window.innerWidth > 768) {
+        showCate();
+    } else {
+        closeCate();
+    }
+};
+
+$ham.addEventListener("click", showCate);
+$closeCate.addEventListener("click", closeCate);
 $logo.addEventListener("click", clickLogo);
 $selectRegion.addEventListener("change", () => {
     getDatas();
     updatePage();
 });
 $searchIcon.addEventListener("click", searchData);
+$searchInput.addEventListener("keypress", searchData);
+window.addEventListener("resize", checkScreenSize);
 createBtn(categoryBtns);
 createOption(regionLists);
 getDatas();

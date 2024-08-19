@@ -18,7 +18,7 @@
     --point-white: #ffffff;
     --point-black: #323232;
     --point-dartblue: #3e4958;
-    --hover-list: rgba(94, 129, 244, 0.2);
+    --hover-list: rgba(94, 129, 244, 0.08);
 }
 
 * {
@@ -44,7 +44,6 @@ main {
     max-width: 1400px;
     width: 80%;
     display: flex;
-    border: 1px solid red;
 }
 
 h2 {
@@ -95,8 +94,8 @@ h1 img {
     height: 40px;
 }
 
-.logo {
-    border: 1px solid #323232;
+.ham {
+    display: none;
 }
 
 header .cate {
@@ -111,6 +110,10 @@ header .cate {
     padding: 0.5rem 0;
     width: auto;
     margin: 0 0.5rem;
+}
+
+.close-cate {
+    display: none;
 }
 
 .cate-menu {
@@ -140,20 +143,36 @@ header .cate {
     border: none;
 }
 
+.cate:hover,
+.search-icon:hover,
+.select-region:hover,
+.logo:hover,
+.list-item:hover,
+.close:hover,
+.close-cate:hover,
+.ham:hover,
+.page-btn:hover,
+.page-icon:hover {
+    cursor: pointer;
+}
+
 header .swiper-slide .cate:hover {
     transform: translateY(-4px);
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.25);
 }
-/* .cate-menu .cate:hover {
-    transform: translateX(10px);
-} */
 
 header .active {
     border: var(--point-color);
     background-color: var(--point-color);
     color: var(--point-white);
+    text-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.25);
 }
 
+/* sec1 */
+.sec1 h2 {
+    display: none;
+    text-align: left;
+}
 /* search style */
 .search {
     /* border: 1px solid var(--point-color); */
@@ -169,12 +188,20 @@ header .active {
 .search select {
     border: none;
     color: var(--point-gray);
+    outline: none;
 }
 
 .search input {
     width: 100%;
     padding: 1rem 1rem;
     border: none;
+    outline: none;
+}
+.search:has(input:focus-visible) {
+    border: 2px solid var(--point-color);
+}
+.search:has(select:focus-visible) {
+    border: 2px solid var(--point-color);
 }
 
 .search i {
@@ -201,6 +228,7 @@ ul {
     padding: 0.5rem;
     align-items: center;
     border-radius: 20px;
+    position: relative;
 }
 
 .list-item > .img-box {
@@ -219,6 +247,29 @@ ul {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.state {
+    border-radius: 10px;
+    width: 50px;
+    text-align: center;
+    padding: 0.2rem;
+    font-size: var(--font-size-micro);
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    color: var(--point-white);
+    text-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.25);
+}
+/* 상태별 색깔 */
+.state-black {
+    background-color: var(--point-gray);
+}
+.state-red {
+    background-color: var(--point-red);
+}
+.state-blue {
+    background-color: var(--point-color);
 }
 
 ul .list-info {
@@ -259,7 +310,6 @@ h3 {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    background-color: pink;
 }
 
 .page-icon {
@@ -278,6 +328,7 @@ h3 {
     border: 1px solid var(--point-color);
     background-color: var(--point-color);
     color: var(--point-white);
+    text-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.25);
 }
 
 .error {
@@ -294,10 +345,14 @@ h3 {
 }
 
 /* detail info */
+.close {
+    display: none;
+}
+
 .detail-info {
     position: absolute;
     width: 100%;
-    height: calc(100% - 80px);
+    height: calc(100% - 78px);
     background-color: var(--point-white);
     margin-top: 80px;
     top: 0;
@@ -306,6 +361,7 @@ h3 {
 
 .hidden-info {
     display: none;
+    z-index: -1;
 }
 
 .detail-contain {
@@ -344,4 +400,125 @@ h3 {
     border: none;
     background-color: var(--point-color);
     color: var(--point-white);
+}
+
+/* 반응형 처리 gogo */
+
+@media (max-width: 768px) {
+    main {
+        max-width: 768px;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+    }
+    header {
+        justify-content: space-between;
+        align-items: center;
+        margin: 0;
+        padding: 1rem 0.5rem;
+    }
+
+    .myCate {
+        display: none;
+        width: 100%;
+        position: absolute;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        background-color: white;
+        z-index: 2;
+    }
+    .myCate .swiper-wrapper {
+        display: flex;
+        height: auto;
+        padding: 2rem 0;
+        flex-direction: column;
+        align-items: center;
+    }
+    .myCate .swiper-slide {
+        display: flex;
+        justify-content: center;
+        padding: 0.3rem 0;
+        width: 100%;
+        margin: 0 0.3rem;
+    }
+    .cate {
+        width: 10rem;
+    }
+    .cate-menu .cate {
+        display: none;
+    }
+    .ham {
+        display: inline-block;
+    }
+    h1 {
+        height: 40px;
+        margin: 0;
+    }
+    h1 img {
+        width: 40px;
+        height: 40px;
+    }
+    .map {
+        display: none;
+    }
+    .sec1 {
+        width: 100%;
+    }
+    .sec1 h2 {
+        display: block;
+    }
+    .service-list {
+        max-height: calc(100vh - 15rem);
+    }
+    .sec2 {
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        display: none;
+    }
+    .show-sec2 {
+        display: block;
+        z-index: 1;
+    }
+    .reservation {
+        margin-bottom: 1rem;
+    }
+    .sec2 h2 {
+        display: none;
+    }
+    .close,
+    .close-cate {
+        margin-top: 1rem;
+        margin-right: 1rem;
+        display: block;
+        color: var(--point-color);
+        text-align: right;
+    }
+    .detail-info {
+        width: 100%;
+        height: 100%;
+        margin-top: 0;
+    }
+    .list-item {
+        width: 90%;
+        flex-direction: column;
+    }
+    .list-item > .img-box {
+        width: 100%;
+        padding-top: 55.25%;
+    }
+
+    ul .list-info {
+        width: 100%;
+    }
+}
+
+@media (max-width: 425px) {
+    .service-list {
+        max-height: calc(100vh - 18rem);
+    }
 }
