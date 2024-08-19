@@ -274,7 +274,7 @@ h3 {
     color: var(--point-dartblue);
 }
 
-.page .active-page {
+.page .on {
     border: 1px solid var(--point-color);
     background-color: var(--point-color);
     color: var(--point-white);
