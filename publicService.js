@@ -1,6 +1,7 @@
-import { categoryBtns, regionLists } from "./manageList.js";
+import { categoryBtns, regionLists } from "./manage.js";
+import { env } from "./env.js";
 
-const API_KEY = "4b5745686d636a7438304857416566";
+const API_KEY = env.API_KEY;
 const $swiperWrapper = document.querySelector(".swiper-wrapper");
 const $serviceList = document.getElementById("service-list");
 const $logo = document.getElementById("logo");
@@ -211,63 +212,6 @@ const createListItem = (item) => {
     return listItem;
 };
 
-const updatePage = () => {
-    currentPage = 1;
-    startPage = 1;
-    endPage = 15;
-    getDatas();
-};
-
-const movePage = (pageNum) => {
-    // if (pageNum < 1 || pageNum > Math.ceil(totalResults / pageSize)) return; // Check bounds
-    console.log("click");
-    page = pageNum;
-    currentPage = pageNum;
-    startPage = (page - 1) * pageSize + 1;
-    endPage = startPage + pageSize - 1;
-    getDatas();
-};
-
-const pagination = () => {
-    let pageGroup = Math.ceil(page / groupSize);
-    let lastPage = Math.min(
-        Math.ceil(totalResults / pageSize),
-        pageGroup * groupSize
-    );
-    let firstPage = (pageGroup - 1) * groupSize + 1;
-    let totalPage = Math.ceil(totalResults / pageSize);
-    let prevGroup = (pageGroup - 2) * groupSize + 1;
-    let nextGroup = pageGroup * groupSize + 1;
-
-    let paginationHTML = `<div class="page">`;
-
-    if (currentPage > 1) {
-        paginationHTML += `<i class="page-icon fa-solid fa-chevron-left" id="prev"></i>`;
-    }
-
-    for (let i = firstPage; i <= lastPage; i++) {
-        paginationHTML += `<button class="page-btn ${
-            i === currentPage ? "on" : ""
-        }" data-page="${i}">${i}</button>`;
-    }
-
-    if (currentPage < totalPage) {
-        paginationHTML += `<i class="page-icon fa-solid fa-chevron-right" id="next"></i>`;
-    }
-
-    paginationHTML += `</div>`;
-
-    $serviceList.innerHTML += paginationHTML;
-
-    $prev?.addEventListener("click", () => movePage(prevGroup));
-    $next?.addEventListener("click", () => movePage(nextGroup));
-    document.querySelectorAll(".page-btn").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-            movePage(parseInt(e.target.dataset.page));
-        });
-    });
-};
-
 const dataFormat = (subCategory, service) => {
     const selectOne = subCategory || " ";
     const selectTwo = service || " ";
@@ -297,6 +241,57 @@ const getDatas = async () => {
         console.error("post error", error);
         $serviceList.innerHTML = "<li class='error'>관련 정보가 없습니다</li>";
     }
+};
+
+window.movePage = (pageNum) => {
+    console.log("click");
+    page = pageNum;
+    currentPage = pageNum;
+    startPage = (page - 1) * pageSize + 1;
+    endPage = startPage + pageSize - 1;
+    getDatas();
+};
+
+const updatePage = () => {
+    currentPage = 1;
+    startPage = 1;
+    endPage = 15;
+    getDatas();
+};
+
+const pagination = () => {
+    let pageGroup = Math.ceil(page / groupSize);
+    let lastPage = Math.min(
+        Math.ceil(totalResults / pageSize),
+        pageGroup * groupSize
+    );
+    let firstPage = (pageGroup - 1) * groupSize + 1;
+    let totalPage = Math.ceil(totalResults / pageSize);
+    let prevGroup = (pageGroup - 2) * groupSize + 1;
+    let nextGroup = pageGroup * groupSize + 1;
+
+    let paginationHTML = `<div class="page">`;
+
+    paginationHTML += `<i class="page-icon fa-solid fa-chevron-left" id="prev" 
+    ${
+        pageGroup === 1 ? 'style="opacity: 0.5; pointer-events: none;"' : ""
+    } onClick = 'movePage(${prevGroup})'></i>`;
+
+    for (let i = firstPage; i <= lastPage; i++) {
+        paginationHTML += `<button class="page-btn ${
+            i === currentPage ? "on" : ""
+        }" onClick='movePage(${i})'>${i}</button>`;
+    }
+
+    paginationHTML += `<i class="page-icon fa-solid fa-chevron-right" id="next"  ${
+        pageGroup * groupSize >= totalPage
+            ? 'style="opacity: 0.5; pointer-events: none;"'
+            : ""
+    } onClick='movePage(${nextGroup})'></i>`;
+
+    paginationHTML += `</div>`;
+
+    $serviceList.innerHTML += paginationHTML;
 };
 
 $logo.addEventListener("click", clickLogo);
