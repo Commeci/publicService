@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>서울특별시 공공서비스 예약</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+            integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet/dist/leaflet.css"
+        />
+        <link rel="stylesheet" href="publicService.css" />
+        <script src="publicService.js" defer></script>
+    </head>
+    <body>
+        <header>
+            <h1 id="logo"><img src="./img/logo.png" alt="" /></h1>
+            <div class="swiper myCate">
+                <div class="swiper-wrapper"></div>
+            </div>
+            <div class="cate-menu hidden-menu" id="cate-menu"></div>
+        </header>
+        <main>
+            <section class="sec sec1">
+                <div class="search shadow">
+                    <select name="" id="select-region"></select>
+                    <input
+                        type="search"
+                        id="search-input"
+                        placeholder="검색어를 입력해주세요"
+                    />
+                    <i
+                        class="fa-solid fa-magnifying-glass"
+                        id="search-icon"
+                    ></i>
+                </div>
+                <ul class="service-list" id="service-list">
+                    <!-- <div class="page">
+                        <i class="page-icon fa-solid fa-chevron-left" id="prev"></i>
+                        <button class="page-btn active-page">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <i class="page-icon fa-solid fa-chevron-right" id="next"></i>
+                    </div> -->
+                </ul>
+            </section>
+            <section class="sec sec2">
+                <h2>
+                    <p>서울특별시 <span>공공서비스</span> 예약</p>
+                    <p>이용하려는 서비스를 빠르게 예약해보세요</p>
+                </h2>
+                <div class="map" id="map"></div>
+                <div class="detail-info hidden-info" id="detail-info">
+                    <div class="detail-contain">
+                        <div class="map-info" id="map-info"></div>
+                        <div class="detail-text" id="detail-text"></div>
+                        <a
+                            class="reservation"
+                            id="reserve-link"
+                            target="_blank"
+                            href="#"
+                            >예약하러가기</a
+                        >
+                    </div>
+                </div>
+            </section>
+        </main>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script
+            type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey="
+        ></script>
+    </body>
+</html>

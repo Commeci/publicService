@@ -1,0 +1,347 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+
+:root {
+    --font-size-micro: 0.5rem;
+    --font-size-small: 0.75rem;
+    --font-size-medium: 1rem;
+    --font-size-large: 1.5rem;
+    --font-size-extra-large: 2rem;
+    --font-weight-default: 400;
+    --font-weight-thin: 300;
+    --font-weight-thick: 500;
+    --font-weight-extra-thick: 600;
+    --font-weight-bold: 800;
+
+    --point-color: #5e81f4;
+    --point-red: #e85d36;
+    --point-gray: #666666;
+    --point-white: #ffffff;
+    --point-black: #323232;
+    --point-dartblue: #3e4958;
+    --hover-list: rgba(94, 129, 244, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    margin-bottom: 2rem;
+    padding: 1rem 2rem;
+    position: relative;
+}
+
+body {
+    overflow: hidden;
+}
+
+main {
+    margin: auto;
+    max-width: 1400px;
+    width: 80%;
+    display: flex;
+    border: 1px solid red;
+}
+
+h2 {
+    text-align: right;
+    margin-bottom: 1rem;
+}
+
+/* common */
+
+.font-noto {
+    font-family: "Noto Sans KR", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.shadow {
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* --------------------- */
+.sec1 {
+    width: 40%;
+    margin-right: 2rem;
+    overflow: hidden;
+}
+
+.sec2 {
+    width: 60%;
+    position: relative;
+    height: calc(100vh - 130px);
+}
+h2 {
+    color: var(--point-black);
+}
+h2 span {
+    color: var(--point-color);
+}
+
+/* header style */
+h1 {
+    height: 40px;
+    margin-right: 1rem;
+    margin-top: 0.5rem;
+    transition: 0.5s;
+}
+h1 img {
+    width: 40px;
+    height: 40px;
+}
+
+.logo {
+    border: 1px solid #323232;
+}
+
+header .cate {
+    height: 40px;
+    padding: 0 2rem;
+    border-radius: 50px;
+    border: 1px solid var(--point-dartblue);
+    color: var(--point-dartblue);
+}
+
+.myCate .swiper-slide {
+    padding: 0.5rem 0;
+    width: auto;
+    margin: 0 0.5rem;
+}
+
+.cate-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+}
+
+.hidden-menu {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(0);
+    overflow: hidden;
+    transition: 0.5s;
+}
+
+.visible-menu {
+    max-height: auto;
+    opacity: 1;
+    transform: translateY(70px);
+    transition: 0.5s;
+}
+
+.cate-menu .cate {
+    margin: 0.2rem;
+    z-index: 10;
+    border: none;
+}
+
+header .swiper-slide .cate:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.25);
+}
+/* .cate-menu .cate:hover {
+    transform: translateX(10px);
+} */
+
+header .active {
+    border: var(--point-color);
+    background-color: var(--point-color);
+    color: var(--point-white);
+}
+
+/* search style */
+.search {
+    /* border: 1px solid var(--point-color); */
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.search select {
+    border: none;
+    color: var(--point-gray);
+}
+
+.search input {
+    width: 100%;
+    padding: 1rem 1rem;
+    border: none;
+}
+
+.search i {
+    background-color: var(--point-color);
+    padding: 1rem;
+    color: var(--point-white);
+}
+/* list style */
+ul {
+    padding: 1rem 0;
+}
+
+.service-list {
+    flex-grow: 1;
+    max-height: calc(100vh - 195px);
+    overflow-y: auto;
+}
+
+.list-item {
+    margin: 1.5rem auto;
+    width: 90%;
+    display: flex;
+    list-style: none;
+    padding: 0.5rem;
+    align-items: center;
+    border-radius: 20px;
+}
+
+.list-item > .img-box {
+    width: 50%;
+    height: 0;
+    padding-top: 30.25%;
+    overflow: hidden;
+    border-radius: 20px;
+    position: relative;
+}
+
+.img-box > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+ul .list-info {
+    margin: 1rem;
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+ul .list-info p {
+    font-size: var(--font-size-small);
+    color: var(--point-gray);
+    display: flex;
+}
+
+h3 {
+    margin-bottom: 20px;
+    color: var(--point-black);
+}
+.icon {
+    display: flex;
+    align-items: center;
+    margin-right: 0.2rem;
+}
+.icon > img {
+    width: 14px;
+    height: 14px;
+}
+
+.list-item:hover {
+    background-color: var(--hover-list);
+}
+
+.page {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: pink;
+}
+
+.page-icon {
+    color: var(--point-color);
+}
+
+.page-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid var(--point-dartblue);
+    color: var(--point-dartblue);
+}
+
+.page .active-page {
+    border: 1px solid var(--point-color);
+    background-color: var(--point-color);
+    color: var(--point-white);
+}
+
+.error {
+    margin-left: 2rem;
+    list-style: none;
+}
+
+/* sec2 영역 */
+/* map */
+.map {
+    height: calc(100% - 85px);
+    width: 100%;
+    border-radius: 20px;
+}
+
+/* detail info */
+.detail-info {
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 80px);
+    background-color: var(--point-white);
+    margin-top: 80px;
+    top: 0;
+    z-index: 1;
+}
+
+.hidden-info {
+    display: none;
+}
+
+.detail-contain {
+    margin: 1rem auto;
+    width: 90%;
+    height: 100%;
+    position: relative;
+}
+
+.map-info {
+    width: 100%;
+    height: 50%;
+    border-radius: 20px;
+}
+.detail-text {
+    background-color: var(--point-white);
+    width: 100%;
+    height: 35%;
+    margin-top: 1rem;
+    border-radius: 20px;
+    padding: 1rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.reservation {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 1rem;
+    right: 0;
+    height: 40px;
+    padding: 0 2rem;
+    border-radius: 50px;
+    border: none;
+    background-color: var(--point-color);
+    color: var(--point-white);
+}
