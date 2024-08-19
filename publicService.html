@@ -24,42 +24,55 @@
     </head>
     <body>
         <header>
-            <h1 id="logo"><img src="./img/logo.png" alt="" /></h1>
-            <div class="swiper myCate">
+            <h1 id="logo" class="logo"><img src="./img/logo.png" alt="" /></h1>
+            <div class="swiper myCate" id="my-cate">
+                <i class="close-cate fa-solid fa-xmark" id="close-cate"></i>
                 <div class="swiper-wrapper"></div>
             </div>
             <div class="cate-menu hidden-menu" id="cate-menu"></div>
+            <i class="ham" id="ham"><img src="./img/ham.png" alt="ham" /></i>
         </header>
         <main>
             <section class="sec sec1">
+                <h2 class="font-noto">
+                    <p>서울특별시 <span>교육 공공서비스</span> 예약</p>
+                    <p>이용하려는 서비스를 빠르게 예약해보세요</p>
+                </h2>
                 <div class="search shadow">
-                    <select name="" id="select-region"></select>
+                    <select
+                        name=""
+                        id="select-region"
+                        class="font-noto select-region"
+                    ></select>
                     <input
+                        class="font-noto"
                         type="search"
                         id="search-input"
                         placeholder="검색어를 입력해주세요"
                     />
                     <i
-                        class="fa-solid fa-magnifying-glass"
+                        class="search-icon fa-solid fa-magnifying-glass"
                         id="search-icon"
                     ></i>
                 </div>
-                <ul class="service-list" id="service-list">
-                    <div class="page"></div>
-                </ul>
+                <ul class="service-list" id="service-list"></ul>
             </section>
             <section class="sec sec2">
-                <h2>
-                    <p>서울특별시 <span>공공서비스</span> 예약</p>
+                <h2 class="font-noto">
+                    <p>서울특별시 <span>교육 공공서비스</span> 예약</p>
                     <p>이용하려는 서비스를 빠르게 예약해보세요</p>
                 </h2>
                 <div class="map" id="map"></div>
                 <div class="detail-info hidden-info" id="detail-info">
                     <div class="detail-contain">
+                        <i class="close fa-solid fa-xmark" id="close"></i>
                         <div class="map-info" id="map-info"></div>
-                        <div class="detail-text" id="detail-text"></div>
+                        <div
+                            class="detail-text font-noto"
+                            id="detail-text"
+                        ></div>
                         <a
-                            class="reservation"
+                            class="reservation font-noto"
                             id="reserve-link"
                             target="_blank"
                             href="#"
