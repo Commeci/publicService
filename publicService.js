@@ -114,8 +114,7 @@ const searchData = (event) => {
     updatePage();
 };
 
-const clickCateBtn = (category, buttonMap) => {
-    updatePage();
+const clickCateBtn = async (category, buttonMap) => {
     document
         .querySelectorAll(".cate")
         .forEach((btn) => btn.classList.remove("active"));
@@ -130,7 +129,10 @@ const clickCateBtn = (category, buttonMap) => {
     } else {
         subCategory = category.split("/")[0];
     }
-    getDatas();
+    console.log(subCategory);
+
+    await getDatas();
+    updatePage();
 };
 
 const createBtn = (categories) => {
@@ -157,9 +159,10 @@ const createBtn = (categories) => {
 
         buttonMap.set(item, { swiperSlideButton, cateMenuButton });
 
-        swiperSlideButton.addEventListener("click", () =>
-            clickCateBtn(item, buttonMap)
-        );
+        swiperSlideButton.addEventListener("click", () => {
+            clickCateBtn(item, buttonMap);
+            closeCate();
+        });
         cateMenuButton.addEventListener("click", () =>
             clickCateBtn(item, buttonMap)
         );
@@ -246,13 +249,16 @@ const dataFormat = (subCategory, service) => {
     let selectFour = $selectRegion.value.trim();
     selectFour = selectFour === "전체" ? " " : selectFour;
     const url = `http://openapi.seoul.go.kr:8088/${API_KEY}/json/ListPublicReservationEducation/${startPage}/${endPage}/${selectOne}/${selectTwo}/ /${selectFour}`;
-    console.log(url);
     return url;
 };
 
 const getDatas = async () => {
+    $serviceList.innerHTML = "<li>로딩 중...</li>";
+
     const dataUrl = dataFormat(subCategory, service);
     try {
+        console.log(dataUrl);
+
         const res = await fetch(dataUrl);
         const data = await res.json();
         const items = data.ListPublicReservationEducation.row;
@@ -272,20 +278,20 @@ const getDatas = async () => {
     }
 };
 
-window.movePage = (pageNum) => {
+window.movePage = async (pageNum) => {
     console.log("click");
     page = pageNum;
     currentPage = pageNum;
     startPage = (page - 1) * pageSize + 1;
     endPage = startPage + pageSize - 1;
-    getDatas();
+    await getDatas();
 };
 
-const updatePage = () => {
+const updatePage = async () => {
     currentPage = 1;
     startPage = 1;
     endPage = 15;
-    getDatas();
+    await getDatas();
 };
 
 const pagination = () => {
@@ -328,22 +334,20 @@ const showCate = () => {
 };
 
 const closeCate = () => {
-    $myCate.style.cssText = `display: none;`;
+    if (window.innerWidth <= 768) {
+        $myCate.style.cssText = `display: none;`;
+    }
 };
 
 const checkScreenSize = () => {
-    if (window.innerWidth > 768) {
-        showCate();
-    } else {
-        closeCate();
-    }
+    window.innerWidth > 768 ? showCate() : closeCate();
 };
 
 $ham.addEventListener("click", showCate);
 $closeCate.addEventListener("click", closeCate);
 $logo.addEventListener("click", clickLogo);
-$selectRegion.addEventListener("change", () => {
-    getDatas();
+$selectRegion.addEventListener("change", async () => {
+    await getDatas();
     updatePage();
 });
 $searchIcon.addEventListener("click", searchData);
@@ -351,7 +355,7 @@ $searchInput.addEventListener("keypress", searchData);
 window.addEventListener("resize", checkScreenSize);
 createBtn(categoryBtns);
 createOption(regionLists);
-getDatas();
+await getDatas();
 defaultMap();
 searchMap();
 swiper.update();
